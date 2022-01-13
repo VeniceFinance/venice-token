@@ -11,7 +11,8 @@ contract Venice is ERC20Burnable, Ownable{
 
     uint256 private constant maxSupply = 1000000000 * 1e18;     // the total supply
 
-    event NewMinter(address indexed _operator, address indexed _newMinter);
+    event NewMinter(address indexed _operator, address indexed newMinter);
+    event DelMinter(address indexed _operator, address indexed delMinter);
 
     /**
      * @notice Constructs the FERC-20 contract.
@@ -26,6 +27,7 @@ contract Venice is ERC20Burnable, Ownable{
 
     function delMinter(address _delMinter) public onlyOwner returns (bool) {
         require(_delMinter != address(0), "Venice: _delMinter is the zero address");
+        emit DelMinter(msg.sender, _delMinter);
         return EnumerableSet.remove(_minters, _delMinter);
     }
 
